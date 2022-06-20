@@ -16,6 +16,7 @@ public class NYCDao {
 		try {
 			Connection conn = DBConnect.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
+			
 			ResultSet res = st.executeQuery();
 
 			while (res.next()) {
@@ -34,6 +35,55 @@ public class NYCDao {
 		}
 
 		return result;
+	}
+	
+	
+	public List<String> getProvider(){
+		String sql = "SELECT distinct Provider FROM nyc_wifi_hotspot_locations order by provider asc ";
+		List<String> result = new ArrayList<>();
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+
+			while (res.next()) {
+				result.add(new String( res.getString("Provider")));
+			}
+			
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("SQL Error");
+		}
+
+		return result;
+		
+	}
+	
+	public List<String> getVertici(String provider){
+		String sql = "SELECT distinct city "
+				+ "FROM nyc_wifi_hotspot_locations  "
+				+ "where provider = ? "
+				+ "order by city asc";
+		List<String> result = new ArrayList<>();
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setString(1, provider);
+			ResultSet res = st.executeQuery();
+
+			while (res.next()) {
+				result.add(new String( res.getString("city")));
+			}
+			
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("SQL Error");
+		}
+
+		return result;
+			
 	}
 	
 }

@@ -6,6 +6,8 @@ package it.polito.tdp.nyc;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+
 import it.polito.tdp.nyc.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-public class FXMLController {
+public class FXMLController {  
 	
 	private Model model;
 
@@ -39,7 +41,7 @@ public class FXMLController {
     private ComboBox<String> cmbProvider; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbQuartiere"
-    private ComboBox<?> cmbQuartiere; // Value injected by FXMLLoader
+    private ComboBox<String> cmbQuartiere; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtMemoria"
     private TextField txtMemoria; // Value injected by FXMLLoader
@@ -59,7 +61,26 @@ public class FXMLController {
     @FXML
     void doCreaGrafo(ActionEvent event) {
     	
+    	txtResult.clear();
+    	String p = this.cmbProvider.getValue();
+    	if(p == null) {
+    		txtResult.appendText("Seleziona un provider!");
+    		return ;
+    	}
+    	
+    	
+    	
+    	this.model.creaGrafo(p);
+    	
+    		txtResult.appendText("Grafo creato!\n");
+    		txtResult.appendText("# Vertici : " + this.model.nVertici() + "\n");
+    		//txtResult.appendText("# Archi : " + this.model.nArchi() + "\n");
+
+    		this.cmbQuartiere.getItems().clear();
+    		this.cmbQuartiere.getItems().addAll(model.getVertici(p));
     }
+    	
+    
 
     @FXML
     void doQuartieriAdiacenti(ActionEvent event) {
@@ -87,6 +108,8 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model = model;
+    	this.cmbProvider.getItems().addAll(model.getAllProvider());
+    	
     }
 
 }
