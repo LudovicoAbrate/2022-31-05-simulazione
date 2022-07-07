@@ -32,6 +32,11 @@ public void creaGrafo(String provider) {
 	Graphs.addAllVertices(this.grafo,this.dao.getVertici(provider));
 	
 	
+	for(String c1 : this.getVertici(provider)) {
+		for(String c2 : this.getVertici(provider)) {
+			if(!c1.equals(c2)) {
+				double peso = LatLngTool.distance(c1.ub(), c2.getPosizione(), LengthUnit.KILOMETER);
+				Graphs.addEdge(this.grafo, c1, c2, peso);
 	
 	
 }
