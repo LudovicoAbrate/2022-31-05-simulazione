@@ -74,7 +74,7 @@ public class FXMLController {
     	
     		txtResult.appendText("Grafo creato!\n");
     		txtResult.appendText("# Vertici : " + this.model.nVertici() + "\n");
-    		//txtResult.appendText("# Archi : " + this.model.nArchi() + "\n");
+    		txtResult.appendText("# Archi : " + this.model.nArchi() + "\n");
 
     		this.cmbQuartiere.getItems().clear();
     		this.cmbQuartiere.getItems().addAll(model.getVertici(p));

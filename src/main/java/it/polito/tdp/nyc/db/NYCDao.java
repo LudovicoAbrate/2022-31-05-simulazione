@@ -60,20 +60,24 @@ public class NYCDao {
 		
 	}
 	
-	public List<String> getVertici(String provider){
-		String sql = "SELECT distinct city "
-				+ "FROM nyc_wifi_hotspot_locations  "
-				+ "where provider = ? "
-				+ "order by city asc";
+	public List<Vertici> getVertici(String provider){
+		
+		String sql="select distinct city as c "
+				+ "from nyc_wifi_hotspot_locations "
+				+ "where provider = ? ";
+		
 		List<String> result = new ArrayList<>();
+		
+		
 		try {
 			Connection conn = DBConnect.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
+			
 			st.setString(1, provider);
 			ResultSet res = st.executeQuery();
 
 			while (res.next()) {
-				result.add(new String( res.getString("city")));
+				result.add(new String( res.getString("c"),res.getDouble("Latitude"),res.getDouble("Longitude")));
 			}
 			
 			conn.close();
@@ -83,7 +87,10 @@ public class NYCDao {
 		}
 
 		return result;
-			
+		
+		
+				
 	}
+	
 	
 }
