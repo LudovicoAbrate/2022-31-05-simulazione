@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.javadocmd.simplelatlng.LatLng;
+
+import it.polito.tdp.nyc.model.City;
 import it.polito.tdp.nyc.model.Hotspot;
 
 public class NYCDao {
@@ -60,37 +64,33 @@ public class NYCDao {
 		
 	}
 	
-	public List<Vertici> getVertici(String provider){
+	public List<City> getCities(String provider) {
+		String sql = "SELECT DISTINCT City, AVG(Latitude) AS Lat, AVG(Longitude) AS Lng, COUNT(*) AS NUM "
+				+ "FROM nyc_wifi_hotspot_locations "
+				+ "WHERE Provider= ? "
+				+ "GROUP BY City "
+				+ "ORDER BY City";
 		
-		String sql="select distinct city as c "
-				+ "from nyc_wifi_hotspot_locations "
-				+ "where provider = ? ";
-		
-		List<String> result = new ArrayList<>();
-		
-		
+		Connection conn = DBConnect.getConnection();
 		try {
-			Connection conn = DBConnect.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
-			
 			st.setString(1, provider);
-			ResultSet res = st.executeQuery();
-
-			while (res.next()) {
-				result.add(new String( res.getString("c"),res.getDouble("Latitude"),res.getDouble("Longitude")));
+			ResultSet res = st.executeQuery() ;
+			List<City> result = new ArrayList<City>() ;
+			while(res.next()) {
+				result.add(new City( res.getString("City"),
+						new LatLng(res.getDouble("Lat"), res.getDouble("Lng")),
+						res.getInt("NUM")
+						));
+				
 			}
-			
 			conn.close();
+			return result;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException("SQL Error");
+			return null;
 		}
-
-		return result;
-		
-		
-				
+	
+	
 	}
-	
-	
 }
