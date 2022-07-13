@@ -57,7 +57,7 @@ public void creaGrafo(String provider) {
 	for(City c1 : this.grafo.vertexSet()) {
 		for(City c2: this.grafo.vertexSet()) {
 			
-			if(c1.city.compareTo(c2.city)!= 0 ) {
+			if(c1.nome.compareTo(c2.nome)!= 0 ) {
 				
 				Double distanza = LatLngTool.distance(c1.getLatlng(), c2.getLatlng(),LengthUnit.KILOMETER );
 				
@@ -70,11 +70,11 @@ public void creaGrafo(String provider) {
 	
 }
 
-public List<CityDistance> getCityDistances(City scelto) {
+/*public List<CityDistance> getCityDistances(City scelto) {
 	List<CityDistance> result = new ArrayList<>();
 	List<City> vicini = Graphs.neighborListOf(this.grafo, scelto);
 	for(City v: vicini) {
-		result.add(new CityDistance(v.city, 
+		result.add(new CityDistance(v.getNome(), 
 				this.grafo.getEdgeWeight(this.grafo.getEdge(scelto, v)))) ;
 	}
 	
@@ -86,9 +86,9 @@ public List<CityDistance> getCityDistances(City scelto) {
 	});
 	
 	return result ;
-}
+}*/
 
-/*public List<CityDistance> getAdiacenze(City quartiere){
+public List<CityDistance> getAdiacenze(City quartiere){
 
 	List<CityDistance> lista = new ArrayList<>();
 	
@@ -96,7 +96,7 @@ public List<CityDistance> getCityDistances(City scelto) {
 	
 	for(City v: vicini) {
 		
-		lista.add(new CityDistance(v.city, 
+		lista.add(new CityDistance(v.nome, 
 				this.grafo.getEdgeWeight(this.grafo.getEdge(quartiere, v)))) ;
 	}
 	
@@ -106,7 +106,7 @@ public List<CityDistance> getCityDistances(City scelto) {
 	
 }
 
-*/
+
 
 
 public List<String> getAllProvider(){

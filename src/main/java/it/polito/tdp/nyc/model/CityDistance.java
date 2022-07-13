@@ -1,6 +1,6 @@
 package it.polito.tdp.nyc.model;
 
-public class CityDistance  {
+public class CityDistance implements Comparable<CityDistance> {
 
 	private String nome ;
 	private Double distanza ;
@@ -24,11 +24,11 @@ public class CityDistance  {
 		this.distanza = distanza;
 	}
 
-	/*@Override
+	@Override
 	public int compareTo(CityDistance altra) {
 		// TODO Auto-generated method stub
 		return this.distanza.compareTo(altra.distanza);
-	}*/
+	}
 	
 
 }

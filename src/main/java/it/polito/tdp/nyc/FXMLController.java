@@ -20,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class FXMLController {  
 	
@@ -95,7 +96,7 @@ public class FXMLController {
     		return;
     	}
     	
-    	List<CityDistance> distanze = model.getCityDistances(scelto);
+    	List<CityDistance> distanze = model.getAdiacenze(scelto);
     	
     	tblQuartieri.setItems(FXCollections.observableArrayList(distanze));
     	
@@ -119,6 +120,10 @@ public class FXMLController {
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
         assert clDistanza != null : "fx:id=\"clDistanza\" was not injected: check your FXML file 'Scene.fxml'.";
         assert clQuartiere != null : "fx:id=\"clQuartiere\" was not injected: check your FXML file 'Scene.fxml'.";
+        
+        clQuartiere.setCellValueFactory(new PropertyValueFactory<CityDistance, String>("nome"));
+		clDistanza.setCellValueFactory(new PropertyValueFactory<CityDistance, Double>("distanza"));
+	
 
     }
     
